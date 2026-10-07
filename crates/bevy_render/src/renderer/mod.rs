@@ -272,6 +272,8 @@ pub async fn initialize_renderer(
         compatible_surface: surface.as_ref(),
         force_fallback_adapter,
         apply_limit_buckets: false,
+        // `false` everywhere but the web, where a WebXR session will not accept the device without it.
+        xr_compatible: options.xr_compatible,
     };
 
     #[cfg(not(target_family = "wasm"))]
