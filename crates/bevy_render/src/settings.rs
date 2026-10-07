@@ -65,6 +65,14 @@ pub struct WgpuSettings {
     pub force_fallback_adapter: bool,
     /// The name of the adapter to use.
     pub adapter_name: Option<String>,
+    /// Whether to ask for an adapter a WebXR session will accept, on the web.
+    ///
+    /// WebXR does not let a renderer draw into the textures it hands over unless the device came from an adapter
+    /// requested with `xrCompatible: true`, and WebGL's `makeXRCompatible()` has no WebGPU equivalent - the
+    /// request is the only place it can be asked for. It is a field of wgpu's `RequestAdapterOptions` that
+    /// upstream does not have, so this is where a fork that carries it is told to use it, and it means nothing
+    /// off the web: every other backend ignores it.
+    pub xr_compatible: bool,
 }
 
 impl Default for WgpuSettings {
@@ -159,6 +167,7 @@ impl Default for WgpuSettings {
             instance_memory_budget_thresholds: MemoryBudgetThresholds::default(),
             force_fallback_adapter: false,
             adapter_name: None,
+            xr_compatible: false,
         }
     }
 }
