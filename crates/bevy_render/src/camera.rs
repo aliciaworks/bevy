@@ -301,7 +301,14 @@ impl NormalizedRenderTargetExt for NormalizedRenderTarget {
                     physical_size: tex.size,
                     scale_factor: 1.0,
                 })
-                .ok_or(MissingRenderTargetInfoError::TextureView { texture_view: *id }),
+                .ok_or_else(|| {
+                    bevy_log::error!(
+                        "bevy_render: ManualTextureViewHandle({:?}) is not in the manual views; raised at:\n{}",
+                        id,
+                        std::backtrace::Backtrace::force_capture()
+                    );
+                    MissingRenderTargetInfoError::TextureView { texture_view: *id }
+                }),
             NormalizedRenderTarget::None { width, height } => Ok(RenderTargetInfo {
                 physical_size: uvec2(*width, *height),
                 scale_factor: 1.0,
