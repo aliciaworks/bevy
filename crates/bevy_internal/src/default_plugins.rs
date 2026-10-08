@@ -37,6 +37,7 @@ plugin_group! {
         bevy_scene:::ScenePlugin,
         // NOTE: WinitPlugin needs to be after AssetPlugin because of custom cursors.
         #[cfg(feature = "bevy_winit")]
+        #[cfg(not(target_os = "visionos"))]
         bevy_winit:::WinitPlugin,
         #[custom(cfg(all(feature = "dlss", not(feature = "force_disable_dlss"))))]
         bevy_anti_alias::dlss:::DlssInitPlugin,
