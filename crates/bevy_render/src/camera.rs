@@ -394,11 +394,23 @@ pub fn camera_system(
                 || camera.computed.old_viewport_size != viewport_size
                 || camera.computed.old_sub_camera_view != camera.sub_camera_view)
         {
-            let new_computed_target_info = normalized_target.get_render_target_info(
+            let new_computed_target_info = match normalized_target.get_render_target_info(
                 windows,
                 &images,
                 &manual_texture_views,
-            )?;
+            ) {
+                Ok(info) => info,
+                // A target that cannot be resolved is a camera that is not drawn, and a camera that is not
+                // drawn is not a reason to stop the app: the error handler bevy installs by default turns a
+                // system that returned one into a panic, and a session whose first frames have no image yet
+                // is exactly the case this leaves room for.
+                Err(error) => {
+                    bevy_log::error!(
+                        "bevy_render: a camera's target could not be resolved, so it is not drawn: {error}"
+                    );
+                    continue;
+                }
+            };
             // Check for the scale factor changing, and resize the viewport if needed.
             // This can happen when the window is moved between monitors with different DPIs.
             // Without this, the viewport will take a smaller portion of the window moved to
