@@ -25,7 +25,7 @@ pub use bevy_anti_alias as anti_alias;
 pub use bevy_app as app;
 #[cfg(feature = "bevy_asset")]
 pub use bevy_asset as asset;
-#[cfg(feature = "bevy_audio")]
+#[cfg(all(feature = "bevy_audio", not(target_os = "visionos")))]
 pub use bevy_audio as audio;
 #[cfg(feature = "bevy_camera")]
 pub use bevy_camera as camera;
@@ -111,7 +111,7 @@ pub use bevy_ui_widgets as ui_widgets;
 pub use bevy_utils as utils;
 #[cfg(feature = "bevy_window")]
 pub use bevy_window as window;
-#[cfg(feature = "bevy_winit")]
+#[cfg(all(feature = "bevy_winit", not(target_os = "visionos")))]
 pub use bevy_winit as winit;
 #[cfg(feature = "bevy_world_serialization")]
 pub use bevy_world_serialization as world_serialization;
