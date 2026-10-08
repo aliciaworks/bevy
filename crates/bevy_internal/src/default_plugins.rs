@@ -79,7 +79,6 @@ plugin_group! {
         #[cfg(feature = "bevy_pbr")]
         bevy_pbr:::PbrPlugin,
         #[cfg(feature = "bevy_audio")]
-        #[custom(cfg(not(target_os = "visionos")))]
         bevy_audio:::AudioPlugin,
         #[cfg(feature = "bevy_gilrs")]
         bevy_gilrs:::GilrsPlugin,
