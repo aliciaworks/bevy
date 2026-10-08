@@ -36,7 +36,8 @@ plugin_group! {
         #[cfg(feature = "bevy_scene")]
         bevy_scene:::ScenePlugin,
         // NOTE: WinitPlugin needs to be after AssetPlugin because of custom cursors.
-        #[cfg(all(feature = "bevy_winit", not(target_os = "visionos")))]
+        #[cfg(feature = "bevy_winit")]
+        #[custom(cfg(not(target_os = "visionos")))]
         bevy_winit:::WinitPlugin,
         #[custom(cfg(all(feature = "dlss", not(feature = "force_disable_dlss"))))]
         bevy_anti_alias::dlss:::DlssInitPlugin,
@@ -77,7 +78,8 @@ plugin_group! {
         bevy_gltf:::GltfPlugin,
         #[cfg(feature = "bevy_pbr")]
         bevy_pbr:::PbrPlugin,
-        #[cfg(all(feature = "bevy_audio", not(target_os = "visionos")))]
+        #[cfg(feature = "bevy_audio")]
+        #[custom(cfg(not(target_os = "visionos")))]
         bevy_audio:::AudioPlugin,
         #[cfg(feature = "bevy_gilrs")]
         bevy_gilrs:::GilrsPlugin,
