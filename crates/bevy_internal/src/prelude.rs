@@ -48,7 +48,7 @@ pub use bevy_derive::{bevy_main, Deref, DerefMut};
 pub use crate::asset::prelude::*;
 
 #[doc(hidden)]
-#[cfg(feature = "bevy_audio")]
+#[cfg(all(feature = "bevy_audio", not(target_os = "visionos")))]
 pub use crate::audio::prelude::*;
 
 #[doc(hidden)]
